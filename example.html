@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Codeable Textarea</title>
+    <style type="text/css">
+      #code_textarea{
+        width: 100%;
+        height: 150px;
+        display: table;
+        margin: 0 auto;
+      }
+      #run_code{
+        display: table;
+        margin: 0 auto;
+      }
+      .container {
+        width: 80%;
+        display: table;
+        margin: 0 auto;
+      }
+      .tests{
+        display: table;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <textarea id="code_textarea">function add1(x){return x+1;}</textarea>
+      <ul class="tests">
+        <li id="test_1">Test 1: add1(2) should be equal to 3</li>
+        <li id="test_2">Test 1: add1(-3) should be equal to -2</li>
+      </ul>
+      <button id="run_code">Run tests</button>
+    </div>
+  </body>
+  <script type="text/javascript" src="jquery-2.1.0-min.js"></script>
+  <script type="text/javascript" src="jquery-ui-1.9.2.custom.min.js"></script>
+  <script type="text/javascript" src="codeable_textarea.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      var widget = $("#code_textarea").code_textarea(
+        {tests: [
+          {expected: "3", actual: "add1(2)", feedback_id: 'test_1'}, 
+          {expected: "-2", actual: "add1(-3)", feedback_id: 'test_2'}], 
+          passedSingleTest: function(id){ $("#"+id).css('background', 'green') }, 
+          failedSingleTest: function(id){ $("#"+id).css('background', 'red') }});
+      $("#run_code").click(function(){
+        widget.code_textarea("runTests");
+      });
+    });
+  </script>
+</html>
